@@ -12,6 +12,12 @@ const ProductSchema = new Schema({
 })
 
 ProductSchema
+.virtual('imgSrc')
+.get( function() {
+    return this.image.slice(8);
+})
+
+ProductSchema
 .virtual('url')
 .get( function() {
     return '/product/' + this._id;
