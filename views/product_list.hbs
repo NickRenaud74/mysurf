@@ -1,0 +1,13 @@
+<section>
+    <h1 class="prod-title">{{title}}</h1>
+    <ul class="prod-list">
+        {{#each product_list}}
+            <a href="{{this.url}}">
+                <li class="prod-card">
+                    <img class="prod-img" src="{{this.imgSrc}}" >
+                    <p class="prod-name" >{{this.name}}</p>
+                </li>
+            </a>
+        {{/each}}
+    </ul>
+</section>

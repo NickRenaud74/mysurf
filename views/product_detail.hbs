@@ -1,0 +1,15 @@
+<section class="prod">
+    <h1 class="prod-title">{{title}}</h1>
+    <img class="prod-detail-img" src="{{product.imgSrc}}">
+    <p class="prod-description">{{product.description}}</p>
+    <div class="prod-detail">
+        <div class="detail">
+            <h5>Brand: <a href="{{product.brand.url}}" >{{product.brand.name}} </a> </h5>
+            <h5>Category: <a href="{{product.category.url}}" >{{product.category.name}} </a></h5>
+        </div>
+        <div class="detail">
+            <h5>In Stock: {{product.inStock}}</h5>
+            <h5>Price: ${{product.price}}</h5>
+        </div>
+    </div>
+</section>
