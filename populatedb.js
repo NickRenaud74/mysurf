@@ -27,9 +27,9 @@ const brands = []
 const categories = []
 const products = []
 
-function brandCreate(title, description, image, cb) {
+function brandCreate(name, description, image, cb) {
   const brand = new Brand({
-      title: title, 
+      name: name, 
       description: description, 
       image: image
     });
