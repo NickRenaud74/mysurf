@@ -1,0 +1,21 @@
+<section class="item-detail">
+    <h1 class="item-title">{{title}}</h1>
+    <img class="item-detail-img" src="{{brand.imgSrc}}">
+    <p class="item-description">{{brand.description}}</p>
+    <div class="brand-products">
+        <h2 class="text-center">Our Products</h2>
+        <ul class="list">
+            {{#each brandProducts}}
+            <li>
+                <div class="card text-center">
+                    <img src="{{this.imgSrc}}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{this.name}}</h5>
+                        <a href="{{this.url}}" role="button" class="btn btn-info btn-lg">Check it out</a>
+                    </div>
+                </div>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+</section>
