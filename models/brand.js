@@ -9,6 +9,12 @@ const BrandSchema = new Schema({
 });
 
 BrandSchema
+.virtual('imgSrc')
+.get( function() {
+    return this.image.slice(8);
+})
+
+BrandSchema
 .virtual('url')
 .get(function() {
     return '/brand/' + this._id;
