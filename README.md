@@ -7,8 +7,8 @@
 ## Installation 
 
 - clone repository
-- run `npm install` for project dependencies
+- run `npm install` in the terminal for project dependencies
 - run `npm run serverstart` in the terminal to start application in dev mode
-- open [localhost:3000](localhost:3000) in the browser
+- open localhost:3000 in the browser
 
 
