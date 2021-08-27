@@ -1,13 +1,41 @@
 const Category = require('../models/category')
+const Product = require('../models/product')
+const async = require('async')
 
 //Display list of all categories on GET
 exports.categoryList = (req, res, next) => {
-    res.send('NOT IMPLEMENTED YET: category List');
+    Category.find()
+        .sort([['name', 'ascending']])
+        .exec((err, listCategories) => {
+            if (err) return next(err);
+
+            res.render('item_list', {title: 'All Categories', list: listCategories})
+        })
 };
 
 //Display single category detail page on GET
 exports.categoryDetail = (req, res, next) =>  {
-    res.send('NOT IMPLEMENTED YET: category Detail')
+
+    async.parallel({
+        category: function(callback) {
+            Category.findById(req.params.id).exec(callback);
+        },
+        categoryProducts: function(callback) {
+            Product.find({'category': req.params.id}).exec(callback)
+        }
+    }, (err, results) => {
+        if (err) return next(err);
+        if(results.category === null) {
+            let err = new Error('Category not found');
+            err.status = 404;
+            return next(err);
+        }
+        res.render('category_detail', {
+            title: results.category.name, 
+            category: results.category,
+            categoryProducts: results.categoryProducts
+        })
+    })
 };
 
 //Display category create form on GET

@@ -5,10 +5,10 @@ exports.productList = (req, res, next) => {
     Product.find()
         .populate('brand')
         .populate('category')
-        .exec((err, list_product) => {
+        .exec((err, listProduct) => {
             if(err) return next(err);
-            console.log(list_product);
-            res.render('product_list', {title: 'All Products', product_list: list_product})
+            console.log(listProduct);
+            res.render('item_list', {title: 'All Products', list: listProduct})
         })
 };
 
@@ -24,7 +24,7 @@ exports.productDetail = (req, res, next) =>  {
                 err.status = 404;
                 return next(err);
             }
-            res.render('product_detail', {title: product.name, product: product})
+            res.render('product_detail', {title: product.name, product})
         })
 };
 
