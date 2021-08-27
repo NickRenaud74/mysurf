@@ -1,0 +1,16 @@
+<section>
+    <h1 class="list-title">{{title}}</h1>
+    <ul class="list">
+        {{#each list}}
+        <li>
+            <div class="card text-center">
+                <img src="{{this.imgSrc}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{this.name}}</h5>
+                    <a href="{{this.url}}" role="button" class="btn btn-info btn-lg">Check it out</a>
+                </div>
+            </div>
+        </li>
+        {{/each}}
+    </ul>
+</section>
