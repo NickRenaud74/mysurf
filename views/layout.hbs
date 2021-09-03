@@ -28,13 +28,19 @@
 
       <div class="collapse navbar-collapse" id="navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="navbar-item">
-            <a href="/products" class='nav-link'>Products</a>
+          <li class="nav-item dropdown">
+            <a class='nav-link dropdown-toggle' id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Products
+            </a>
+            <ul class="dropdown-menu bg-light border-0 border-start border-4 border-dark" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="/products">All Products</a></li>
+              <li><a class="dropdown-item" href="/product/create">Create New Product</a></li>
+            </ul>
           </li>
-          <li class="navbar-item">
+          <li class="nav-item">
             <a href="/categories" class='nav-link'>Categories</a>
           </li>
-          <li class="navbar-item">
+          <li class="nav-item">
             <a href="/brands" class='nav-link'>Brands</a>
           </li>
         </ul>
