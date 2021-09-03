@@ -1,8 +1,21 @@
 var express = require('express');
 var router = express.Router();
-const brandController = require('../controllers/brandController');
+const multer = require('multer')
+
+const brandController =  require('../controllers/brandController');
 const categoryController = require('../controllers/categoryController');
 const productController = require('../controllers/productController');
+
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, './public/images/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+
+const upload = multer({ storage: storage })
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -10,7 +23,6 @@ router.get('/', function(req, res, next) {
 });
 
 //BRAND ROUTES //
-
 //Get request for creating a brand.
 router.get('/brand/create', brandController.brandCreateGet);
 
@@ -34,7 +46,6 @@ router.get('/brand/:id', brandController.brandDetail);
 
 //Get request for all brands
 router.get('/brands', brandController.brandList);
-
 
 //CATEGORY ROUTES //
 
@@ -69,7 +80,7 @@ router.get('/categories', categoryController.categoryList);
 router.get('/product/create', productController.productCreateGet);
 
 //Post request for creating a product
-router.post('/product/create', productController.productCreatePost);
+router.post('/product/create', upload.single('image'), productController.productCreatePost);
 
 //Get request for deleting a product
 router.get('/product/:id/delete', productController.productDeleteGet);
