@@ -5,9 +5,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 require('dotenv').config();
 
-var indexRouter = require('./routes/index');
-
 var app = express();
+
+const indexRouter = require('./routes')
 
 //Mongoose and database setup
 const mongoose = require('mongoose')
@@ -20,6 +20,8 @@ db.on('error', console.error.bind(console, 'MongoDB connection error: '))
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+
+//middleware
 
 app.use(logger('dev'));
 app.use(express.json());
