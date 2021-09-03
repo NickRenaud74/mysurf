@@ -1,0 +1,37 @@
+<section>
+    <h1>{{title}}</h1>
+    <form method="POST" action="" enctype="multipart/form-data">
+        <div>
+            <label for="name">Name: </label>
+            <input type="text" name="name" placeholder="Product Name" required="true" value={{product}}>
+            <label for="description">Description: </label>
+            <input type="textarea" name="description" placeholder="About this product" value={{product.description}}>
+            <div>
+                <label for="category">Category: </label>
+                <select name="category" id="category-list">
+                    {{#each categories}}
+                        <option value={{this._id}}>{{this.name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div>
+                <label for="brand">Brand: </label>
+                <select name="brand" id="brand-list">
+                    {{#each brands}}
+                        <option value={{this._id}}>{{this.name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <label for="price">Price: </label>
+            <input type="text" name="price" placeholder="99.99" value={{product.price}}>
+
+            <label for="in-stock">In Stock: </label>
+            <input type="text" name="inStock" placeholder="in stock" value={{product.inStock}}>
+            <label for="image">Product Image: </label>
+            <input type="file" name="image" required="true">
+
+            <button class="btn btn-info btn-large" type="submit" >Submit</button>
+
+        </div>
+    </form>
+</section>
