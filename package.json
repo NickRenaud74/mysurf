@@ -7,6 +7,9 @@
     "devstart": "nodemon ./bin/www",
     "serverstart": "DEBUG=mysurf:* npm run devstart"
   },
+  "engines": {
+    "node": "15.8.0"
+  },
   "dependencies": {
     "async": "^3.2.1",
     "cookie-parser": "~1.4.4",
