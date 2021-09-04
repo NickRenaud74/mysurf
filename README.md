@@ -1,6 +1,6 @@
 # mysurf
 
-A CRUD surf shop inventory site to practice building server side applications in an MVC architecture.
+A CRUD surf shop inventory app to practice building server side applications in an MVC architecture.
 
 Tech Stack: 
 - Node/Express
