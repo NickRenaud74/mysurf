@@ -11,8 +11,7 @@ const indexRouter = require('./routes')
 
 //Mongoose and database setup
 const mongoose = require('mongoose')
-const dbPassword = process.env.DB_PASS;
-const mongoDb = `mongodb+srv://mySurf:${dbPassword}@mysurfcluster.y2bdm.mongodb.net/mySurf?retryWrites=true&w=majority`;
+const mongoDb = process.env.MONGODB_URI
 mongoose.connect(mongoDb, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error: '))
