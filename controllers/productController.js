@@ -19,7 +19,18 @@ exports.productList = (req, res, next) => {
 
 //Display single product detail page on GET
 exports.productDetail = (req, res, next) =>  {
-    Product.findById(req.params.id)
+
+    async.parallel({
+        brands: function(callback) {
+            Brand.find(callback);
+        },
+        categories: function(callback) {
+            Category.find(callback)
+        },
+    }, function(err, results) {
+        if(err) return next(err);
+
+        Product.findById(req.params.id)
         .populate('brand')
         .populate('category')
         .exec((err, product) => {
@@ -29,8 +40,15 @@ exports.productDetail = (req, res, next) =>  {
                 err.status = 404;
                 return next(err);
             }
-            res.render('product_detail', {title: product.name, product})
-        })
+            console.log(product);
+            res.render('product_detail', {
+                title: product.name, 
+                product: product, 
+                categories: results.categories,
+                brands: results.brands,
+            })
+        });
+    })
 };
 
 //Display product create form on GET
@@ -108,22 +126,65 @@ exports.productCreatePost = [
     }
 ]
 
-//Display product delete form on GET
-exports.productDeleteGet = (req, res, next) => {
-    res.send('NOT IMPLEMENTED YET: product delete GET')
-};
-
 //Handle product delete on POST
 exports.productDeletePost = (req, res, next) => {
-    res.send('NOT IMPLEMENTED YET: product delete POST')
-};
-
-//Display product update form on GET
-exports.productUpdateGet = (req, res, next) => {
-    res.send('NOT IMPLEMENTED YET: product update GET')
+    Product.findByIdAndRemove(req.body.productid, function deleteProduct(err) {
+        if (err) return next(err);
+        res.redirect('/products')
+    })
 };
 
 //Handle product update on POST
-exports.productUpdatePost = (req, res, next) => {
-    res.send('NOT IMPLEMENTED YET: product update POST')
-};
+exports.productUpdatePost = [
+
+    //Validate and sanitize all fields first
+    body('name', 'Name must not be empty').trim().isLength({min: 1}).escape(),
+    body('description', 'Description must not be empty').trim().isLength({min: 1}).escape(),
+    body('category', 'Category must not be empty').trim().isLength({min: 1}).escape(),
+    body('brand', 'Brand must not be empty').trim().isLength({min: 1}).escape(),
+    body('price', 'Price must not be empty').isFloat().escape(),
+    body('inStock', 'Stock must not be empty').isInt().escape(),
+
+    (req, res, next) => {
+        const errors = validationResult(req);
+
+        const product = new Product({
+            name: req.body.name,
+            description: req.body.description,
+            category: req.body.category,
+            brand: req.body.brand,
+            price: req.body.price,
+            inStock: req.body.inStock,
+            image: req.file.destination + req.file.filename,
+            _id: req.params.id
+        });
+        console.log(errors);
+        if (!errors.isEmpty()) {
+            async.parallel({
+                brands: function(callback) {
+                    Brand.find(callback);
+                },
+                categories: function(callback) {
+                    Category.find(callback)
+                }
+            }, function(err, results) {
+                if (err) return next(err);
+                res.render('product_detail', {
+                    title: product.name, 
+                    brands: results.brands,
+                    categories: results.categories,
+                    product: product,
+                    errors: errors.array(),
+                });
+            });
+            return;
+        } else {
+            //Data from form is valid
+            Product.findByIdAndUpdate(req.params.id, product, {}, function (err, theProduct) {
+                if (err) return next(err);
+
+                res.redirect(theProduct.url);
+            })
+        }
+    }
+]
