@@ -132,6 +132,10 @@ section {
   font-weight: bolder;
 }
 
+.modal-btn {
+  display: inline-flex;
+}
+
 /* MEDIA QUERIES */
 
 
